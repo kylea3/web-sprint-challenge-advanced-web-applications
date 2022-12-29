@@ -53,7 +53,8 @@ export default function App() {
         navigate('/articles');
       })
       .catch(err => {
-        console.error(err)
+        setMessage(err.response.data.message)
+        setSpinnerOn(false)
       })
 
   }
@@ -88,7 +89,7 @@ export default function App() {
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
-      <Spinner spinnerOn={spinnerOn} />
+      <Spinner on={spinnerOn}/>
       <Message />
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}

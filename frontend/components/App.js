@@ -68,6 +68,17 @@ export default function App() {
     // If something goes wrong, check the status of the response:
     // if it's a 401 the token might have gone bad, and we should redirect to login.
     // Don't forget to turn off the spinner!
+    const token = localStorage.getItem('token');
+    setMessage('');
+    axios.get('http://localhost:9000/api/articles', {
+      headers: {
+      authorization: token
+      }
+    })
+    .then(res => {
+      setArticles(res.data.articles)
+    })
+    .catch(err => console.log(err))
   }
 
   const postArticle = article => {
@@ -103,7 +114,7 @@ export default function App() {
           <Route path="articles" element={
             <>
               <ArticleForm />
-              <Articles />
+              <Articles getArticles={getArticles} articles={articles}/>
             </>
           } />
         </Routes>

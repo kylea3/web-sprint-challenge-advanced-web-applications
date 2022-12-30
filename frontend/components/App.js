@@ -96,7 +96,8 @@ export default function App() {
       }
     })
     .then(res => {
-      console.log(res)
+      setMessage(res.data.message);
+      getArticles()
     })
     .catch(err => {
       console.error(err)
@@ -135,13 +136,14 @@ export default function App() {
   const deleteArticle = article_id => {
     // ✨ implement
     const token = localStorage.getItem('token');
-    axios.delete(`${articlesUrl}/:${article_id}`, {
+    axios.delete(`${articlesUrl}/${article_id}`, {
       headers: {
         authorization: token
       }
     })
     .then(res => {
-      console.log(res)
+      setMessage(res.data.message)
+      setArticles(articles.filter(article => article.article_id !== Number(article_id)))
     })
     .catch(err => console.error(err))
   }

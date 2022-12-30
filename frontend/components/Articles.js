@@ -11,7 +11,7 @@ export default function Articles(props) {
   useEffect(() => {
     // ✨ grab the articles here, on first render only
     getArticles();
-  })
+  }, [])
 
   const onClick = (evt) => {
     setCurrentArticleId(parseInt(evt.target.id));

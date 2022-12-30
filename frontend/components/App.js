@@ -97,7 +97,10 @@ export default function App() {
     })
     .then(res => {
       setMessage(res.data.message);
-      getArticles()
+      setArticles([
+        ...articles,
+        article
+      ])
     })
     .catch(err => {
       console.error(err)

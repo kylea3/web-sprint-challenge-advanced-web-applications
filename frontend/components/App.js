@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
 import Articles from './Articles'
 import LoginForm from './LoginForm'
@@ -28,6 +28,7 @@ export default function App() {
     // and a message saying "Goodbye!" should be set in its proper state.
     // In any case, we should redirect the browser back to the login screen,
     // using the helper above.
+    const token = localStorage.getItem('token');
     if(token) {
       localStorage.removeItem('token');
       setMessage('Goodbye!')
@@ -46,7 +47,7 @@ export default function App() {
     setSpinnerOn(true);
     axios.post(loginUrl, {username: username, password: password})
       .then(res => {
-        console.log(res);
+        console.log(res.data.message);
         localStorage.setItem('token', res.data.token);
         setMessage(res.data.message);
         setSpinnerOn(false);
@@ -107,9 +108,8 @@ export default function App() {
     // ✨ implement
     // You got this!
     setMessage('');
-    setCurrentArticleId(article_id)
     const token = localStorage.getItem('token')
-    axios.put(articlesUrl, currentArticleId, article, {
+    axios.put(articlesUrl, article_id, article, {
       headers: {
         authorization: token
       }
@@ -123,25 +123,34 @@ export default function App() {
 
   }
   
-  const currentArticle = articles.filter(article => {
-    return article.article_id === currentArticleId;
-  });
-  
+  const currentArticle = articles.find(article => {
+    return article.article_id === currentArticleId
+    })
+
+
+// useEffect(() => {
+//   console.log(currentArticle)
+//   }, [currentArticleId])
 
   const deleteArticle = article_id => {
     // ✨ implement
+    const token = localStorage.getItem('token');
     axios.delete(`${articlesUrl}/:${article_id}`, {
       headers: {
         authorization: token
       }
     })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => console.error(err))
   }
 
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
       <Spinner on={spinnerOn}/>
-      <Message />
+      <Message message={message} />
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}
         <h1>Advanced Web Applications</h1>

@@ -14,11 +14,11 @@ export default function Articles(props) {
   })
 
   const onClick = (evt) => {
-    setCurrentArticleId(evt.target.id);
+    setCurrentArticleId(parseInt(evt.target.id));
   }
 
   const onDelete = (evt) => {
-    deleteArticle(evt.target.id);
+    deleteArticle(parseInt(evt.target.id));
   }
 
   return (

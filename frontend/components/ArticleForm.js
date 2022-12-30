@@ -13,7 +13,17 @@ export default function ArticleForm(props) {
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding
     // values of the form. If it's not, we should reset the form back to initial values.
-  }, [currentArticle] )
+    // if(currentArticle){
+    //     setValues({
+    //     ...values, 
+    //     title: currentArticle.title, 
+    //     text: currentArticle.text, 
+    //     topic: currentArticle.topic})
+    //     } else { 
+    //     setValues(initialFormValues)
+    //     }
+    currentArticle ? setValues({ ...values, title: currentArticle.title, text: currentArticle.text, topic: currentArticle.topic}) : setValues(initialFormValues);
+  }, [currentArticle])
 
   const onChange = evt => {
     const { id, value } = evt.target
@@ -21,7 +31,7 @@ export default function ArticleForm(props) {
   }
 
   const onCancel = () => {
-    setCurrentArticleId('')
+    setCurrentArticleId()
   }
 
   const onSubmit = evt => {
@@ -35,6 +45,7 @@ export default function ArticleForm(props) {
   const isDisabled = () => {
     // ✨ implement
     // Make sure the inputs have some values
+    currentArticle ? true : false
   }
 
   return (

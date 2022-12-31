@@ -47,7 +47,6 @@ export default function App() {
     setSpinnerOn(true);
     axios.post(loginUrl, {username: username, password: password})
       .then(res => {
-        console.log(res.data.message);
         localStorage.setItem('token', res.data.token);
         setMessage(res.data.message);
         setSpinnerOn(false);
@@ -111,15 +110,33 @@ export default function App() {
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
+
     setMessage('');
     const token = localStorage.getItem('token')
-    axios.put(articlesUrl, article_id, article, {
+    axios.put(`${articlesUrl}/${article_id}`, article, {
       headers: {
         authorization: token
       }
     })
     .then(res => {
-      console.log(res)
+      setMessage(res.data.message)
+      const index = articles.findIndex(article => article.article_id === article_id)
+      console.log(index)
+      const updatedArticle = {
+        article_id: article_id,
+        title: article.title,
+        text: article.text,
+        topic: article.topic 
+        }
+      const nextArticles = articles.map((art, ind) => {
+        if(index === ind) {
+          return updatedArticle
+        } else {
+          return art
+        }
+      })
+      console.log(nextArticles)
+      setArticles(nextArticles)
     })
     .catch(err => {
       console.error(err)
@@ -131,10 +148,6 @@ export default function App() {
     return article.article_id === currentArticleId
     })
 
-
-// useEffect(() => {
-//   console.log(currentArticle)
-//   }, [currentArticleId])
 
   const deleteArticle = article_id => {
     // ✨ implement

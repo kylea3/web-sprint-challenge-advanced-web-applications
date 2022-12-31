@@ -24,8 +24,6 @@ export default function Articles(props) {
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
     // and use the articles prop to generate articles
-    <>
-    {!token ? <Navigate to='/'/> :
     <div className="articles">
       <h2>Articles</h2>
       {
@@ -48,8 +46,6 @@ export default function Articles(props) {
           })
       }
     </div>
-  }
-    </>
   )
 }
 

@@ -136,8 +136,8 @@ export default function App() {
           return art
         }
       })
-      console.log(nextArticles)
       setArticles(nextArticles)
+      setCurrentArticleId();
     })
     .catch(err => {
       console.error(err)

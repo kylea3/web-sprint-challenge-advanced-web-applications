@@ -47,6 +47,7 @@ export default function ArticleForm(props) {
   return (
     // ✨ fix the JSX: make the heading display either "Edit" or "Create"
     // and replace Function.prototype with the correct function
+    <> 
     <form id="form" onSubmit={onSubmit}>
       <h2>{currentArticle ? 'Edit Article' : 'Create Article'}</h2>
       <input
@@ -74,6 +75,7 @@ export default function ArticleForm(props) {
         <button onClick={onCancel}>Cancel edit</button>
       </div>
     </form>
+    </>
   )
 }
 

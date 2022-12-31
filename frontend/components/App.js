@@ -6,6 +6,7 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
+import ProtectedRoute from '../util/ProtectedRoute'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -177,12 +178,12 @@ export default function App() {
           <NavLink id="articlesScreen" to="/articles">Articles</NavLink>
         </nav>
         <Routes>
-          <Route path="/" element={<LoginForm login={login} />} />
-          <Route path="articles" element={
-            <>
+          <Route exact path="/" element={<LoginForm login={login} />} />
+          <Route path="/articles" element={
+            <ProtectedRoute>
               <ArticleForm postArticle={postArticle} updateArticle={updateArticle} setCurrentArticleId={setCurrentArticleId} currentArticle={currentArticle} />
               <Articles getArticles={getArticles} articles={articles} setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} deleteArticle={deleteArticle} />
-            </>
+            </ProtectedRoute>
           } />
         </Routes>
         <footer>Bloom Institute of Technology 2022</footer>

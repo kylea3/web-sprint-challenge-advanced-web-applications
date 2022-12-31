@@ -8,6 +8,7 @@ export default function Articles(props) {
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
 
+  const token = localStorage.getItem('token');
   useEffect(() => {
     // ✨ grab the articles here, on first render only
     getArticles();
@@ -19,11 +20,12 @@ export default function Articles(props) {
 
   const onDelete = (evt) => {
     deleteArticle(parseInt(evt.target.id));
-  }
-
+  } 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
     // and use the articles prop to generate articles
+    <>
+    {!token ? <Navigate to='/'/> :
     <div className="articles">
       <h2>Articles</h2>
       {
@@ -46,6 +48,8 @@ export default function Articles(props) {
           })
       }
     </div>
+  }
+    </>
   )
 }
 
